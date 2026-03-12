@@ -99,8 +99,10 @@ button {
 .fav-row {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
 }
+
 
 .fav-status {
   font-size: 12px;
@@ -178,6 +180,7 @@ button {
   transform: scale(0.92);
   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
+
 
 
 
