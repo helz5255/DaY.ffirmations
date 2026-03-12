@@ -157,9 +157,12 @@ button {
   box-shadow: 0 0 0 1px #333;
 }
 .logo-img {
-  width: 160px;
+  width: 240px;      /* suurem ja nähtavam */
+  max-width: 80%;    /* ei lähe liiga suureks väiksel ekraanil */
   height: auto;
   display: block;
-  margin: 0 auto 10px auto;
+  margin: 0 auto 16px auto;
 }
+
+
 
