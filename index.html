@@ -4,21 +4,25 @@
   <meta charset="utf-8">
   <title>DaY.ffirmations</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="DaY.ffirmations – one mystical, gentle affirmation for every day of the year.">
+  <meta name="description" content="DaY.ffirmations – one mystical affirmation each day.">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Icon -->
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+
   <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- käsitsi kirjutatud / müstiline, aga loetav font -->
-  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 </head>
+
 <body>
+  <button id="theme-toggle" class="theme-btn">☾</button>
+
   <div class="app">
     <header class="app-header">
-      <div class="logo">
-        <span class="logo-main">DaY.</span><span class="logo-sub">ffirmations</span>
-      </div>
+      <div class="logo">DaY.<span class="logo-sub">ffirmations</span></div>
       <div class="subtitle">one gentle thought at a time</div>
-      <button id="theme-toggle" class="theme-btn">☾</button>
     </header>
 
     <main class="card">
@@ -27,13 +31,13 @@
       <div class="quote-tag" id="quote-tag"></div>
 
       <div class="controls">
-        <button id="prev-btn" class="ghost-btn">◀ Previous</button>
+        <button id="prev-btn" class="ghost-btn">◀</button>
         <button id="today-btn" class="primary-btn">Today</button>
-        <button id="next-btn" class="ghost-btn">Next ▶</button>
+        <button id="next-btn" class="ghost-btn">▶</button>
       </div>
 
       <div class="fav-row">
-        <button id="fav-btn" class="icon-btn" title="Save to favorites">♡</button>
+        <button id="fav-btn" class="icon-btn">♡</button>
         <span id="fav-status" class="fav-status"></span>
       </div>
     </main>
@@ -44,7 +48,7 @@
     </section>
 
     <footer class="app-footer">
-      <small>DaY.ffirmations • 365 gentle reminders • stored locally on your device</small>
+      <small>DaY.ffirmations • 365 gentle reminders • stored locally</small>
     </footer>
   </div>
 
@@ -52,6 +56,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-<link rel="icon" type="image/png" href="icon.png">
-<link rel="apple-touch-icon" href="icon.png">
-
