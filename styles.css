@@ -163,6 +163,22 @@ button {
   display: block;
   margin: 0 auto 16px auto;
 }
+.nav-btn {
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 50%;
+  font-size: 18px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-btn:active {
+  transform: scale(0.92);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
 
 
 
