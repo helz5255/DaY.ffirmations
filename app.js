@@ -111,7 +111,12 @@ function goToday() {
 prevBtn.onclick = goPrev;
 nextBtn.onclick = goNext;
 todayBtn.onclick = goToday;
-favBtn.onclick = toggleFavorite;
+favBtn.onclick = () => {
+  toggleFavorite();
+  favBtn.classList.add("fav-pop");
+  setTimeout(() => favBtn.classList.remove("fav-pop"), 250);
+};
+
 
 /* DARK MODE */
 themeToggle.addEventListener("click", () => {
@@ -156,3 +161,4 @@ function handleSwipe() {
   renderQuote();
   renderFavoritesList();
 })();
+
