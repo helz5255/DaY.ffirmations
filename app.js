@@ -1,5 +1,3 @@
-// app.js
-
 const dayLabelEl = document.getElementById("day-label");
 const quoteTextEl = document.getElementById("quote-text");
 const quoteTagEl = document.getElementById("quote-tag");
@@ -9,6 +7,7 @@ const todayBtn = document.getElementById("today-btn");
 const favBtn = document.getElementById("fav-btn");
 const favStatusEl = document.getElementById("fav-status");
 const favListEl = document.getElementById("fav-list");
+const themeToggle = document.getElementById("theme-toggle");
 
 const STORAGE_KEY_FAVS = "day_ffirmations_favorites";
 const STORAGE_KEY_LAST_DAY = "day_ffirmations_last_day";
@@ -21,14 +20,12 @@ function getTodayIndex() {
   const start = new Date(today.getFullYear(), 0, 1);
   const diff = today - start;
   const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-  // kui tsitaate on vähem kui 365, tsüklime
   return (dayOfYear - 1) % QUOTES.length;
 }
 
 function loadFavorites() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY_FAVS);
-    return raw ? JSON.parse(raw) : [];
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_FAVS)) || [];
   } catch {
     return [];
   }
@@ -45,41 +42,40 @@ function isFavorite(id) {
 function toggleFavorite() {
   const quote = QUOTES[currentIndex];
   if (!quote) return;
+
   if (isFavorite(quote.id)) {
     favorites = favorites.filter(f => f !== quote.id);
-    favStatusEl.textContent = "Removed from favorites";
+    favStatusEl.textContent = "Removed";
   } else {
     favorites.push(quote.id);
-    favStatusEl.textContent = "Saved to favorites";
+    favStatusEl.textContent = "Saved";
   }
+
   saveFavorites();
   renderFavoriteButton();
   renderFavoritesList();
-  setTimeout(() => (favStatusEl.textContent = ""), 1500);
+
+  setTimeout(() => favStatusEl.textContent = "", 1500);
 }
 
 function renderFavoriteButton() {
   const quote = QUOTES[currentIndex];
-  if (!quote) return;
   favBtn.textContent = isFavorite(quote.id) ? "♥" : "♡";
 }
 
 function renderFavoritesList() {
   favListEl.innerHTML = "";
   if (!favorites.length) {
-    const span = document.createElement("span");
-    span.textContent = "No favorites yet.";
-    span.style.fontSize = "12px";
-    span.style.color = "#8a8278";
-    favListEl.appendChild(span);
+    favListEl.innerHTML = "<span style='color:#888;font-size:12px;'>No favorites yet</span>";
     return;
   }
+
   favorites.forEach(id => {
     const q = QUOTES.find(q => q.id === id);
     if (!q) return;
     const pill = document.createElement("button");
     pill.className = "fav-pill";
-    pill.textContent = q.text.length > 40 ? q.text.slice(0, 40) + "…" : q.text;
+    pill.textContent = q.text.slice(0, 40) + "...";
     pill.onclick = () => {
       currentIndex = QUOTES.findIndex(item => item.id === id);
       renderQuote();
@@ -90,13 +86,11 @@ function renderFavoritesList() {
 
 function renderQuote() {
   const quote = QUOTES[currentIndex];
-  if (!quote) return;
-  const dayNumber = currentIndex + 1;
-  dayLabelEl.textContent = `Day ${dayNumber}`;
+  dayLabelEl.textContent = `Day ${currentIndex + 1}`;
   quoteTextEl.textContent = quote.text;
   quoteTagEl.textContent = quote.tag ? `#${quote.tag}` : "";
   renderFavoriteButton();
-  localStorage.setItem(STORAGE_KEY_LAST_DAY, String(currentIndex));
+  localStorage.setItem(STORAGE_KEY_LAST_DAY, currentIndex);
 }
 
 function goNext() {
@@ -114,48 +108,51 @@ function goToday() {
   renderQuote();
 }
 
-prevBtn.addEventListener("click", goPrev);
-nextBtn.addEventListener("click", goNext);
-todayBtn.addEventListener("click", goToday);
-favBtn.addEventListener("click", toggleFavorite);
+prevBtn.onclick = goPrev;
+nextBtn.onclick = goNext;
+todayBtn.onclick = goToday;
+favBtn.onclick = toggleFavorite;
 
-// init
-(function init() {
-  const savedIndex = localStorage.getItem(STORAGE_KEY_LAST_DAY);
-  if (savedIndex !== null) {
-    const idx = parseInt(savedIndex, 10);
-    if (!Number.isNaN(idx) && idx >= 0 && idx < QUOTES.length) {
-      currentIndex = idx;
-    } else {
-      currentIndex = getTodayIndex();
-    }
-  } else {
-    currentIndex = getTodayIndex();
+/* DARK MODE */
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  const isDark = document.body.classList.contains("dark");
+  themeToggle.textContent = isDark ? "☀" : "☾";
+  localStorage.setItem("day_ffirmations_theme", isDark ? "dark" : "light");
+});
+
+(function loadTheme() {
+  const saved = localStorage.getItem("day_ffirmations_theme");
+  if (saved === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.textContent = "☀";
   }
-  renderQuote();
-  renderFavoritesList();
 })();
-// Swipe navigation
+
+/* SWIPE */
 let touchStartX = 0;
 let touchEndX = 0;
 
-document.addEventListener("touchstart", (e) => {
+document.addEventListener("touchstart", e => {
   touchStartX = e.changedTouches[0].screenX;
 });
 
-document.addEventListener("touchend", (e) => {
+document.addEventListener("touchend", e => {
   touchEndX = e.changedTouches[0].screenX;
   handleSwipe();
 });
 
 function handleSwipe() {
   const diff = touchEndX - touchStartX;
-
-  if (Math.abs(diff) < 50) return; // ignore tiny swipes
-
-  if (diff > 0) {
-    goPrev(); // swipe right → previous
-  } else {
-    goNext(); // swipe left → next
-  }
+  if (Math.abs(diff) < 50) return;
+  if (diff > 0) goPrev();
+  else goNext();
 }
+
+/* INIT */
+(function init() {
+  const savedIndex = localStorage.getItem(STORAGE_KEY_LAST_DAY);
+  currentIndex = savedIndex ? parseInt(savedIndex) : getTodayIndex();
+  renderQuote();
+  renderFavoritesList();
+})();
