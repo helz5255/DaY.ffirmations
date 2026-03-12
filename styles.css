@@ -36,11 +36,13 @@ body {
 }
 
 .logo {
-  font-family: "Marck Script", cursive;
-  font-size: 32px;
+  font-family: "Cormorant Upright", serif;
+  font-size: 40px;
   letter-spacing: 1px;
   color: var(--ink);
+  text-align: center;
 }
+
 
 .logo-main {
   font-size: 34px;
@@ -90,13 +92,15 @@ body {
 }
 
 .quote-text {
-  font-family: "Marck Script", cursive;
-  font-size: 26px;
+  font-family: "Cormorant Upright", serif;
+  font-size: 30px;
   line-height: 1.4;
+  text-align: center;
   color: var(--ink);
   margin-bottom: 16px;
   position: relative;
 }
+
 
 .quote-text::before,
 .quote-text::after {
@@ -211,3 +215,4 @@ button:active {
   color: var(--muted);
   padding-top: 8px;
 }
+
