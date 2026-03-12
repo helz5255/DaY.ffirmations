@@ -114,8 +114,9 @@ todayBtn.onclick = goToday;
 favBtn.onclick = () => {
   toggleFavorite();
   favBtn.classList.add("fav-pop");
-  setTimeout(() => favBtn.classList.remove("fav-pop"), 250);
+  setTimeout(() => favBtn.classList.remove("fav-pop"), 350);
 };
+
 
 
 /* DARK MODE */
@@ -161,4 +162,5 @@ function handleSwipe() {
   renderQuote();
   renderFavoritesList();
 })();
+
 
