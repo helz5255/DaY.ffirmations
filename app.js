@@ -135,3 +135,27 @@ favBtn.addEventListener("click", toggleFavorite);
   renderQuote();
   renderFavoritesList();
 })();
+// Swipe navigation
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const diff = touchEndX - touchStartX;
+
+  if (Math.abs(diff) < 50) return; // ignore tiny swipes
+
+  if (diff > 0) {
+    goPrev(); // swipe right → previous
+  } else {
+    goNext(); // swipe left → next
+  }
+}
