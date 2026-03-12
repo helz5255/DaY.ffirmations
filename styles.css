@@ -195,6 +195,33 @@ button {
   animation: pop 0.25s ease;
 }
 
+.fav-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Suurem süda, ilma ringita */
+.fav-btn {
+  background: none;
+  border: none;
+  font-size: 34px;
+  cursor: pointer;
+  color: var(--accent); /* kuldne toon */
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Pop animatsioon */
+@keyframes favPop {
+  0% { transform: scale(1); color: var(--accent); }
+  50% { transform: scale(1.45); color: #e6c28f; } /* heledam kuld */
+  100% { transform: scale(1); color: var(--accent); }
+}
+
+.fav-pop {
+  animation: favPop 0.35s ease;
+}
+
 
 
 
